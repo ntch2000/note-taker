@@ -39,10 +39,26 @@ app.get("/notes", (req, res) => {
 
 // api route
 app.get("/api/notes", (req, res) => {
-  return res.json(notes);
+  // reads the db.json file with fs
+  fs.readFile("./db/db.json", (err, data) => {
+    if (err) throw err;
+    // parses the data in the file as JSON
+    const finalData = JSON.parse(data);
+    // returns the JSON data requested
+    return res.json(finalData);
+  });
 });
 
 // main page route - ordered last due to the asterisk route being a wildcard route
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
+});
+
+// post route
+
+app.post("/api/notes", (req, res) => {
+  const newNote = req.body;
+  notes.push(newNote);
+  //console.log(newNote);
+  return res.send("Received new note!");
 });
