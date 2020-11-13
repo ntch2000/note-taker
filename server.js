@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// code to serve static files to html
+app.use(express.static(path.join(__dirname, "public")));
+
 // 4. listen on  PORT
 app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`);
