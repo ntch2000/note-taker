@@ -23,12 +23,12 @@ app.listen(PORT, () => {
 });
 
 // set object array for notes
-const notes = [
-  {
-    title: "Note Title",
-    text: "Note text",
-  },
-];
+// const notes = [
+//   {
+//     title: "Note Title",
+//     text: "Note text",
+//   },
+// ];
 
 // setup routes code
 
@@ -43,9 +43,9 @@ app.get("/api/notes", (req, res) => {
   fs.readFile("./db/db.json", (err, data) => {
     if (err) throw err;
     // parses the data in the file as JSON
-    const finalData = JSON.parse(data);
+    const notes = JSON.parse(data);
     // returns the JSON data requested
-    return res.json(finalData);
+    return res.json(notes);
   });
 });
 
@@ -58,7 +58,18 @@ app.get("*", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
   const newNote = req.body;
-  notes.push(newNote);
   //console.log(newNote);
-  return res.send("Received new note!");
+
+  fs.readFile("./db/db.json", (err, data) => {
+    if (err) throw err;
+    const notes = JSON.parse(data);
+    notes.push(newNote);
+
+    console.log(notes);
+
+    fs.writeFile("./db/db.json", JSON.stringify(notes), (err) => {
+      if (err) throw err;
+      return res.json(notes);
+    });
+  });
 });
