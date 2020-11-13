@@ -37,12 +37,12 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
-// main page route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./public/index.html"));
-});
-
 // api route
 app.get("/api/notes", (req, res) => {
   return res.json(notes);
+});
+
+// main page route - ordered last due to the asterisk route being a wildcard route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/index.html"));
 });
