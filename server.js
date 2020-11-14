@@ -73,18 +73,16 @@ app.post("/api/notes", (req, res) => {
 });
 
 // delete route
-
 app.delete("/api/notes/:id", (req, res) => {
+  // reads the json file to get the currently saves notes
   fs.readFile(dbPath, (err, data) => {
     if (err) throw err;
     const notes = JSON.parse(data);
-    //console.log(notes);
-    const id = req.params.id;
-    const filteredData = notes.filter((el) => el.id != id);
 
-    console.log(notes);
-    console.log(req.params.id);
+    // filters out the selected note to be deleted based on the query id and sets the objects to a new array
+    const filteredData = notes.filter((el) => el.id != req.params.id);
 
+    //  write the new array to the json file to be saved
     fs.writeFile(dbPath, JSON.stringify(filteredData), (err) => {
       if (err) throw err;
       return res.json(filteredData);
