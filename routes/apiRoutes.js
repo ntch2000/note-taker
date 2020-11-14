@@ -1,11 +1,14 @@
 // ALL API ROUTES HERE
 const path = require("path");
+const dbFunctions = require("../db/db");
 
 module.exports = (app) => {
   const dbPath = "../db/db.json";
 
   // Populates the saved notes
   app.get("/api/notes", (req, res) => {
-    // call read method
+    // console.log("test");
+    // console.log(dbFunctions());
+    return res.json(dbFunctions());
   });
 };
