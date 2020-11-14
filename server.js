@@ -22,14 +22,7 @@ app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`);
 });
 
-// set object array for notes
-// const notes = [
-//   {
-//     title: "Note Title",
-//     text: "Note text",
-//   },
-// ];
-
+const dbPath = "./db/db.json";
 // setup routes code
 
 // notes route
@@ -40,7 +33,7 @@ app.get("/notes", (req, res) => {
 // api route
 app.get("/api/notes", (req, res) => {
   // reads the db.json file with fs
-  fs.readFile("./db/db.json", (err, data) => {
+  fs.readFile(dbPath, (err, data) => {
     if (err) throw err;
     // parses the data in the file as JSON
     const notes = JSON.parse(data);
@@ -57,19 +50,44 @@ app.get("*", (req, res) => {
 // post route
 
 app.post("/api/notes", (req, res) => {
+  // sets the request body to newNote
   const newNote = req.body;
-  //console.log(newNote);
+  newNote.id = Math.floor(Math.random() * 10000);
+  console.log(newNote);
 
-  fs.readFile("./db/db.json", (err, data) => {
+  // reads the db.json file to get the current array of notes
+  fs.readFile(dbPath, (err, data) => {
     if (err) throw err;
+    // parses data to JSON object and adds it to notes array
     const notes = JSON.parse(data);
+
+    // pushes new note from the request body to the notes array
     notes.push(newNote);
 
-    console.log(notes);
-
-    fs.writeFile("./db/db.json", JSON.stringify(notes), (err) => {
+    // writes the new notes array as a string to the db.json  file
+    fs.writeFile(dbPath, JSON.stringify(notes), (err) => {
       if (err) throw err;
       return res.json(notes);
+    });
+  });
+});
+
+// delete route
+
+app.delete("/api/notes/:id", (req, res) => {
+  fs.readFile(dbPath, (err, data) => {
+    if (err) throw err;
+    const notes = JSON.parse(data);
+    //console.log(notes);
+    const id = req.params.id;
+    const filteredData = notes.filter((el) => el.id != id);
+
+    console.log(notes);
+    console.log(req.params.id);
+
+    fs.writeFile(dbPath, JSON.stringify(filteredData), (err) => {
+      if (err) throw err;
+      return res.json(filteredData);
     });
   });
 });
