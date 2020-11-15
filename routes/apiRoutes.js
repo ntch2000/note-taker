@@ -2,6 +2,7 @@
 const path = require("path");
 const dbFunctions = require("../db/db");
 const { v4: uuidv4 } = require("uuid");
+const db = require("../db/db");
 
 module.exports = (app) => {
   // Populates the saved notes
@@ -29,5 +30,19 @@ module.exports = (app) => {
     dbFunctions.writeData(notes);
 
     return res.json(notes);
+  });
+
+  // route  for deleting notes from the api
+  app.delete("/api/notes/:id", (req, res) => {
+    // reads the json file to get the currently saved notes
+    const notes = dbFunctions.readData();
+
+    // filters out the selected note to be deleted based on the query id and sets the objects to a new array
+    const filteredNotes = notes.filter((el) => el.id != req.params.id);
+
+    // writes the new array to the json file to be saved
+    dbFunctions.writeData(filteredNotes);
+
+    return res.json(filteredNotes);
   });
 };
