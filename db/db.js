@@ -12,4 +12,8 @@ const readData = () => {
   return notes;
 };
 
-module.exports = readData;
+const writeData = (info) => {
+  fs.writeFileSync(dbPath, JSON.stringify(info));
+};
+
+module.exports = { readData, writeData };
