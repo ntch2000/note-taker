@@ -12,6 +12,7 @@ const readData = () => {
   return notes;
 };
 
+// function to write saved notes to db.json
 const writeData = (info) => {
   fs.writeFileSync(dbPath, JSON.stringify(info));
 };
