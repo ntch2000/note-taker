@@ -53,6 +53,7 @@ When the user begins typing in the title of the note and the text of the note, t
 Clicking on the saved note titles on the left allows users to pull up previously saved notes. These notes can also be deleted by clicking the red trash icon next to the note the user wants to delete.
 
 ![Note Take Demo GIF](./assets/note-take-demo.gif "Note Take Demo GIF")
+
 _Gif of using the note taker application_
 
 ## Credits
