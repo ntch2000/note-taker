@@ -1,14 +1,11 @@
-// ALL API ROUTES HERE
-const path = require("path");
+// files for all api routes for the application
+
 const dbFunctions = require("../db/db");
 const { v4: uuidv4 } = require("uuid");
-const db = require("../db/db");
 
 module.exports = (app) => {
   // Populates the saved notes
   app.get("/api/notes", (req, res) => {
-    // console.log("test");
-    // console.log(dbFunctions());
     return res.json(dbFunctions.readData());
   });
 
