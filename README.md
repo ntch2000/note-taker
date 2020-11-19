@@ -60,6 +60,9 @@ _Gif of using the note taker application_
 
 Some of the packages used for the development of this application are as follows with links to each.
 
+- [Heroku](https://www.heroku.com/)
+  Heroku allows for the hosting of server-side code on their cloud platform. This effectively allows for the application server code to be run on their systems.
+
 - [Express](https://expressjs.com/)
   Allows for creating a server for the web application.
 
